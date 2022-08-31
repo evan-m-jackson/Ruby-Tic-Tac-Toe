@@ -50,6 +50,8 @@ class Game
     end
 
     def mark_board (spot, player)
-        @board[spot.to_i] = player
+        if is_user_input_valid(spot)
+            @board[spot.to_i] = player
+        end
     end
 end
