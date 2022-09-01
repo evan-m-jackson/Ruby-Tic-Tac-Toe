@@ -8,6 +8,11 @@ describe '#Game' do
         expect(game.get_board).to eq(['0','1','2','3','4','5','6','7','8'])
     end
 
+    it 'Has a Player Marker' do
+        game = Game.new
+        expect(game.get_marker).to eq('X')
+    end
+
     it 'Prints the welcome Message' do
         game = Game.new
         expect{game.welcome}.to output("WELCOME TO TIC TAC TOE!\n").to_stdout()
@@ -82,37 +87,42 @@ describe '#Game' do
 
     it "Mark the board in the middle" do
         game = Game.new
-        game.mark_board('4', 'X')
+        game.mark_board('4')
         expect(game.get_board).to eq (['0','1','2','3','X','5','6','7','8'])
     end
 
     it "Mark the first spot on the board" do
         game = Game.new
-        game.mark_board('0', 'X')
+        game.mark_board('0')
         expect(game.get_board).to eq (['X','1','2','3','4','5','6','7','8'])
     end
 
     it "Try to mark spot not on the board" do
         game = Game.new
-        game.mark_board('9', 'X')
+        game.mark_board('9')
         expect(game.get_board).to eq (['0','1','2','3','4','5','6','7','8'])
     end
 
     it "Try to mark 6 spot with O" do
         game = Game.new
-        game.mark_board('6', 'O')
+        game.change_marker
+        game.mark_board('6')
         expect(game.get_board).to eq (['0','1','2','3','4','5','O','7','8'])
     end
 
     it "When the user input is already taken" do
         game = Game.new
-        game.mark_board('0', 'X')
+        game.mark_board('0')
         expect(game.is_user_input_valid('0')).to be false
     end
 
     it "Confirms that the user move was valid" do
         game = Game.new
-        game.mark_board('0', 'X')
-        expect{game.move_confirmation('0', 'X')}.to output("Thank you!\n").to_stdout
+        expect{game.move_confirmation('0')}.to output("Thank you!\n").to_stdout
+    end
+
+    it "Give's the user an error message" do
+        game = Game.new
+        expect{game.move_confirmation('a')}.to output("Sorry that is not a valid move. Please select an integer between 0 and 8.\n").to_stdout
     end
 end

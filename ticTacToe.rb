@@ -1,10 +1,19 @@
 class Game
     def initialize
-        @board = ['0','1','2','3','4','5','6','7','8']        
+        @board = ['0','1','2','3','4','5','6','7','8']
+        @marker = 'X'        
     end
 
     def get_board
         @board
+    end
+
+    def get_marker
+        @marker
+    end
+
+    def change_marker
+        @marker = 'O'
     end
 
     def welcome
@@ -49,14 +58,18 @@ class Game
         end
     end
 
-    def mark_board (spot, player)
-        if is_user_input_valid(spot)
-            @board[spot.to_i] = player
+    def mark_board choice
+        if is_user_input_valid(choice)
+            @board[choice.to_i] = @marker
         end
     end
 
-    def move_confirmation (spot, player)
-        puts "Thank you!"
+    def move_confirmation choice
+        if is_user_input_valid(choice)
+            puts "Thank you!"
+        else
+            puts "Sorry that is not a valid move. Please select an integer between 0 and 8.\n"
+        end
     end
 
     
