@@ -98,4 +98,21 @@ describe '#Game' do
         expect(game.get_board).to eq (['0','1','2','3','4','5','6','7','8'])
     end
 
+    it "Try to mark 6 spot with O" do
+        game = Game.new
+        game.mark_board('6', 'O')
+        expect(game.get_board).to eq (['0','1','2','3','4','5','O','7','8'])
+    end
+
+    it "When the user input is already taken" do
+        game = Game.new
+        game.mark_board('0', 'X')
+        expect(game.is_user_input_valid('0')).to be false
+    end
+
+    it "Confirms that the user move was valid" do
+        game = Game.new
+        game.mark_board('0', 'X')
+        expect{game.move_confirmation('0', 'X')}.to output("Thank you!\n").to_stdout
+    end
 end

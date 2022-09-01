@@ -39,7 +39,7 @@ class Game
     def is_user_input_valid choice
         if choice !~ /\D/ && choice.length > 0
             num = choice.to_i
-            if num <= 8 && num >= 0
+            if num <= 8 && num >= 0 && choice == @board[num]
                 true
             else
                 false   
@@ -54,4 +54,10 @@ class Game
             @board[spot.to_i] = player
         end
     end
+
+    def move_confirmation (spot, player)
+        puts "Thank you!"
+    end
+
+    
 end
