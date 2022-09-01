@@ -1,7 +1,8 @@
 class Game
     def initialize
         @board = ['0','1','2','3','4','5','6','7','8']
-        @marker = 'X'        
+        @marker = 'X'
+        @pos_arrow = 1        
     end
 
     def get_board
@@ -9,11 +10,15 @@ class Game
     end
 
     def get_marker
-        @marker
+        if @pos_arrow == 1
+            'X'
+        else
+            'O'
+        end
     end
 
     def change_marker
-        @marker = 'O'
+        @pos_arrow *= -1
     end
 
     def welcome
@@ -69,7 +74,7 @@ class Game
 
     def mark_board choice
         if is_user_input_valid(choice)
-            @board[choice.to_i] = @marker
+            @board[choice.to_i] = get_marker
         end
     end
 
@@ -83,5 +88,13 @@ class Game
         end
     end
 
+    def playing_game choice
+        if is_user_input_valid(choice)
+            mark_board(choice)
+            change_marker
+        end
+    end
+
     
 end
+

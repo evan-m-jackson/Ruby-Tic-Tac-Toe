@@ -132,6 +132,37 @@ describe '#Game' do
         expect{game.move_confirmation('4')}.to output("Sorry this space is taken. Please select another.\n").to_stdout
     end
 
-    
+    it "Player X picks then Player O picks" do
+        game = Game.new
+        game.playing_game('4')
+        game.playing_game('3')
+        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
+    end
+
+    it "Player X picks wrong once and then Player O picks" do
+        game = Game.new
+        game.playing_game('a')
+        game.playing_game('4')
+        game.playing_game('3')
+        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
+    end
+
+    it "Player X picks and then Player O picks wrong" do
+        game = Game.new
+        game.playing_game('4')
+        game.playing_game('9')
+        game.playing_game('3')
+        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
+    end
+
+    it "Player X picks, Player O picks and Player X picks again" do
+        game = Game.new
+        game.playing_game('4')
+        game.playing_game('3')
+        game.playing_game('5')
+        expect(game.get_board).to eq (['0','1','2','O','X','X','6','7','8'])
+    end
+
+
 
 end
