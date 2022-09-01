@@ -48,11 +48,20 @@ class Game
     def is_user_input_valid choice
         if choice !~ /\D/ && choice.length > 0
             num = choice.to_i
-            if num <= 8 && num >= 0 && choice == @board[num]
+            if num <= 8 && num >= 0
                 true
             else
                 false   
             end 
+        else
+            false
+        end
+    end
+
+    def is_space_free choice
+        num = choice.to_i
+        if choice == @board[num]
+            true
         else
             false
         end
@@ -65,10 +74,12 @@ class Game
     end
 
     def move_confirmation choice
-        if is_user_input_valid(choice)
-            puts "Thank you!"
-        else
+        if !is_user_input_valid(choice)
             puts "Sorry that is not a valid move. Please select an integer between 0 and 8.\n"
+        elsif !is_space_free(choice)
+            puts "Sorry this space is taken. Please select another."
+        else
+            puts "Thank you!"
         end
     end
 

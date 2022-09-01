@@ -113,7 +113,7 @@ describe '#Game' do
     it "When the user input is already taken" do
         game = Game.new
         game.mark_board('0')
-        expect(game.is_user_input_valid('0')).to be false
+        expect(game.is_space_free('0')).to be false
     end
 
     it "Confirms that the user move was valid" do
@@ -125,4 +125,13 @@ describe '#Game' do
         game = Game.new
         expect{game.move_confirmation('a')}.to output("Sorry that is not a valid move. Please select an integer between 0 and 8.\n").to_stdout
     end
+
+    it "Tells the user that the spot is taken" do
+        game = Game.new
+        game.mark_board('4')
+        expect{game.move_confirmation('4')}.to output("Sorry this space is taken. Please select another.\n").to_stdout
+    end
+
+    
+
 end
