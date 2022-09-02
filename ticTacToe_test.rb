@@ -208,5 +208,29 @@ describe '#Game' do
         expect(game.player_wins).to be true
     end
 
+    it "Returns that O is the winner" do
+        game = Game.new
+        ['0','2','1','4','3','6'].each do |choice|
+            game.mark_board(choice)
+        end
+
+    it "CPU picks a spot" do
+        game = Game.new
+        game.mark_board('0')
+        game.change_marker
+        game.cpu_pick
+        game.print_board
+        expect(game.get_board).not_to eq(['0','X','2','3','4','5','6','7','8'])
+    end
+
+    it "CPU picks a spot" do
+        game = Game.new
+        game.mark_board('0')
+        game.change_marker
+        game.cpu_pick
+        game.mark_board('2')
+        game.print_board
+        expect(game.get_board).not_to eq(['0','X','2','3','4','5','6','7','8'])
+    end
 
 end
