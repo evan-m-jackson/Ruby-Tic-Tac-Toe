@@ -88,7 +88,8 @@ class Game
     end
 
     def playing_game choice
-        if is_user_input_valid(choice)
+        move_confirmation(choice)
+        if is_user_input_valid(choice) && is_space_free(choice)
             mark_board(choice)
             change_marker
         end
