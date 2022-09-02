@@ -23,7 +23,7 @@ end
 game.print_board
 
 if game.player_wins
-    puts "GAME OVER! Player #{game.get_marker} wins!"
+    puts "GAME OVER! Player #{game.winning_player} wins!"
 
 else
     puts "GAME OVER! It's a tie :("

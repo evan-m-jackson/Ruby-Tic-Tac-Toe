@@ -196,6 +196,7 @@ describe '#Game' do
         game = Game.new
         ['0','1','4','2','8'].each do |choice|
             game.mark_board(choice)
+            game.change_marker
         end
         expect(game.player_wins).to be true
     end
@@ -212,7 +213,30 @@ describe '#Game' do
         game = Game.new
         ['0','2','1','4','3','6'].each do |choice|
             game.mark_board(choice)
+            game.change_marker
         end
+        expect(game.winning_player).to eq('O')
+    end
+
+    it "Player X wins diagonally" do
+        game = Game.new
+        ['0','1','4','2','8'].each do |choice|
+            game.mark_board(choice)
+            game.change_marker
+        end
+        expect(game.winning_player).to eq('X')
+    end
+
+    it "Returns that there is no winner yet" do
+        game = Game.new
+        ['0','1','2','3','4','5'].each do |choice|
+            game.mark_board(choice)
+            game.change_marker
+        end
+        expect(game.winning_player).to eq("No winner")
+    end
+
+
 
     it "CPU picks a spot" do
         game = Game.new

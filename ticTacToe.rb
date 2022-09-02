@@ -97,13 +97,17 @@ class Game
         return true
     end
 
-    def player_wins
+    def winning_player
         @WINNING_COMBINATIONS.each do |arr|
             if @board[arr[0]] == @board[arr[1]] && @board[arr[1]] == @board[arr[2]]
-                return true
+                return @board[arr[0]]
             end
         end
-        return false 
+        return "No winner"
+    end
+
+    def player_wins
+        return winning_player != "No winner"
     end
 
     def cpu_pick
