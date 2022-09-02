@@ -88,14 +88,6 @@ class Game
         end
     end
 
-    def playing_game choice
-        move_confirmation(choice)
-        if is_user_input_valid(choice) && is_space_free(choice)
-            mark_board(choice)
-            change_marker
-        end
-    end
-
     def game_over
         (0..8).each do |n|
             if @board[n] == n.to_s

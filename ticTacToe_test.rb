@@ -118,78 +118,43 @@ describe '#Game' do
 
     it "Player X picks then Player O picks" do
         game = Game.new
-        game.playing_game('4')
-        game.playing_game('3')
+        game.mark_board('4')
+        game.change_marker
+        game.mark_board('3')
         expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
     end
 
-    it "Player X picks wrong once and then Player O picks" do
-        game = Game.new
-        game.playing_game('a')
-        game.playing_game('4')
-        game.playing_game('3')
-        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
-    end
-
-    it "Player X picks and then Player O picks wrong" do
-        game = Game.new
-        game.playing_game('4')
-        game.playing_game('9')
-        game.playing_game('3')
-        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
-    end
-
-    it "Player X picks, Player O picks and Player X picks again" do
-        game = Game.new
-        game.playing_game('4')
-        game.playing_game('3')
-        game.playing_game('5')
-        expect(game.get_board).to eq (['0','1','2','O','X','X','6','7','8'])
-    end
-
-    it "Player X picks, Player O picks the same spot as X but then makes a valid pick" do
-        game = Game.new
-        game.playing_game('4')
-        game.playing_game('4')
-        game.playing_game('3')
-        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
-    end
-
-    it "message prints for valid move" do
-        game = Game.new
-        expect{game.playing_game('0')}.to output("Thank you!\n").to_stdout
-    end
 
     it "message prints if a spot is taken" do
         game = Game.new
-        game.playing_game('0')
-        expect{game.playing_game('0')}.to output("Sorry this space is taken. Please select another.\n").to_stdout
+        game.mark_board('0')
+        expect{game.move_confirmation('0')}.to output("Sorry this space is taken. Please select another.\n").to_stdout
     end
 
     it "message prints for an invalid choice" do
         game = Game.new
-        expect{game.playing_game('a')}.to output("Sorry that is not a valid move. Please select an integer between 0 and 8.\n").to_stdout
+        expect{game.move_confirmation('a')}.to output("Sorry that is not a valid move. Please select an integer between 0 and 8.\n").to_stdout
     end
 
     it "game is over" do
         game = Game.new
         (0..8).each do |n|
             num = n.to_s
-            game.playing_game(num)
+            game.mark_board(num)
         end
         expect(game.game_over).to be true
     end
 
     it "game is not over" do
         game = Game.new
-        game.playing_game('1')
+        game.mark_board('1')
         expect(game.game_over).to be false
     end
 
     it "Player X wins horizontally in the first row" do
         game = Game.new
         ['0','3','1','4','2'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
         end
         expect(game.player_wins).to be true
     end
@@ -197,7 +162,7 @@ describe '#Game' do
     it "Player O wins horizontally in the second row" do
         game = Game.new
         ['0','3','1','4','8','5'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
         end
         expect(game.player_wins).to be true
     end
@@ -205,7 +170,8 @@ describe '#Game' do
     it "No winner yet" do
         game = Game.new
         ['0','1','2','3','4','5'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
+            game.change_marker
         end
         expect(game.player_wins).to be false
     end
@@ -213,7 +179,7 @@ describe '#Game' do
     it "Player X wins horizontally in the third row" do
         game = Game.new
         ['6','1','7','0','8'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
         end
         expect(game.player_wins).to be true
     end
@@ -221,7 +187,7 @@ describe '#Game' do
     it "Player O wins vertically" do
         game = Game.new
         ['0','1','8','4','6','7'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
         end
         expect(game.player_wins).to be true
     end
@@ -229,7 +195,7 @@ describe '#Game' do
     it "Player X wins diagonally" do
         game = Game.new
         ['0','1','4','2','8'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
         end
         expect(game.player_wins).to be true
     end
@@ -237,7 +203,7 @@ describe '#Game' do
     it "Player O wins diagonally the opposite way" do
         game = Game.new
         ['0','2','1','4','3','6'].each do |choice|
-            game.playing_game(choice)
+            game.mark_board(choice)
         end
         expect(game.player_wins).to be true
     end
