@@ -171,5 +171,20 @@ describe '#Game' do
         expect{game.playing_game('a')}.to output("Sorry that is not a valid move. Please select an integer between 0 and 8.\n").to_stdout
     end
 
+    it "game is over" do
+        game = Game.new
+        (0..8).each do |n|
+            num = n.to_s
+            game.playing_game(num)
+        end
+        expect(game.game_over).to be true
+    end
+
+    it "game is not over" do
+        game = Game.new
+        game.playing_game('1')
+        expect(game.game_over).to be false
+    end
+
 
 end

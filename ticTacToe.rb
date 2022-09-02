@@ -95,6 +95,16 @@ class Game
         end
     end
 
-    
+    def game_over
+        (0..8).each do |n|
+            if @board[n] == n.to_s
+                return false
+            end
+        end
+        return true
+    end
+
 end
+
+
 
