@@ -186,5 +186,61 @@ describe '#Game' do
         expect(game.game_over).to be false
     end
 
+    it "Player X wins horizontally in the first row" do
+        game = Game.new
+        ['0','3','1','4','2'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be true
+    end
+
+    it "Player O wins horizontally in the second row" do
+        game = Game.new
+        ['0','3','1','4','8','5'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be true
+    end
+
+    it "No winner yet" do
+        game = Game.new
+        ['0','1','2','3','4','5'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be false
+    end
+
+    it "Player X wins horizontally in the third row" do
+        game = Game.new
+        ['6','1','7','0','8'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be true
+    end
+
+    it "Player O wins vertically" do
+        game = Game.new
+        ['0','1','8','4','6','7'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be true
+    end
+
+    it "Player X wins diagonally" do
+        game = Game.new
+        ['0','1','4','2','8'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be true
+    end
+
+    it "Player O wins diagonally the opposite way" do
+        game = Game.new
+        ['0','2','1','4','3','6'].each do |choice|
+            game.playing_game(choice)
+        end
+        expect(game.player_wins).to be true
+    end
+
 
 end

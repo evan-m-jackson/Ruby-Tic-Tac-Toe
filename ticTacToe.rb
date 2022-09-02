@@ -1,7 +1,8 @@
 class Game
     def initialize
         @board = ['0','1','2','3','4','5','6','7','8']
-        @pos_arrow = 1        
+        @pos_arrow = 1
+        @WINNING_COMBINATIONS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]        
     end
 
     def get_board
@@ -102,6 +103,15 @@ class Game
             end
         end
         return true
+    end
+
+    def player_wins
+        @WINNING_COMBINATIONS.each do |arr|
+            if @board[arr[0]] == @board[arr[1]] && @board[arr[1]] == @board[arr[2]]
+                return true
+            end
+        end
+        return false 
     end
 
 end
