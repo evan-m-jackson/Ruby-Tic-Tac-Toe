@@ -257,4 +257,13 @@ describe '#Game' do
         expect(game.get_board).not_to eq(['0','X','2','3','4','5','6','7','8'])
     end
 
+    it "Returns the available spots on the board" do
+        game = Game.new
+        ['0','1','2','3','4','5'].each do |choice|
+            game.mark_board(choice)
+            game.change_marker
+        end
+        expect(game.get_available_spots).to eq([6,7,8])
+    end
+
 end

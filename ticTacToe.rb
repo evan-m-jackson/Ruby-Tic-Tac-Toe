@@ -121,6 +121,16 @@ class Game
         change_marker
     end
 
+    def get_available_spots
+        available = []
+        @board.each_with_index do |spot, idx|
+            if @board[idx] != 'X' && @board[idx] != 'O'
+                available << idx
+            end
+        end
+        available
+    end
+
 end
 
 
