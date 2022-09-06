@@ -266,4 +266,15 @@ describe '#Game' do
         expect(game.get_available_spots).to eq([6,7,8])
     end
 
+    it 'CPU chooses the most optimal position' do
+        game = Game.new
+        ['0','2','7','3','8','5'].each do |i|
+            game.mark_board(i)
+            game.change_marker
+        end
+        best_move = game.minimax('O')
+        expect(best_move).to eq(4)
+
+    end
+
 end

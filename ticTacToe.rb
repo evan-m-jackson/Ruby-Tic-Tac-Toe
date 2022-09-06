@@ -2,7 +2,9 @@ class Game
     def initialize
         @board = ['0','1','2','3','4','5','6','7','8']
         @pos_arrow = 1
-        @WINNING_COMBINATIONS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]        
+        @WINNING_COMBINATIONS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+        @HUMAN = 'X'
+        @CPU = 'O'        
     end
 
     def get_board
@@ -130,6 +132,69 @@ class Game
         end
         available
     end
+
+    def minimax player
+        available_spots = get_available_spots
+
+        if winning_player == @HUMAN
+            return -10
+        elsif winning_player == @CPU
+            return 10
+        elsif available_spots.length == 0
+            return 0
+        end
+
+        moves = []
+
+        available_spots.each do |spot|
+            move = {}
+
+            move[spot] = 0
+
+            @board[spot] = player
+
+            if player == @CPU
+                result = minimax(@HUMAN)
+                move[spot] = result
+            else
+                result = minimax(@CPU)
+                move[spot] = result
+            end
+
+            @board[spot] = spot.to_s
+
+            moves << move
+        end
+
+        best_move = 0
+
+        if player == @CPU
+            best_score = -10000
+            (0..moves.length-1).each do |i|
+                if !moves[i].values[0].nil?
+                    if moves[i].values[0] > best_score
+                    best_score = moves[i].values[0]
+                    best_move = moves[i].keys[0]
+                    end
+                end
+            end
+        else
+            best_score = 10000
+            (0..moves.length-1).each do |i|
+                if !moves[i].values[0].nil?
+                    if moves[i].values[0] < best_score
+                        best_score = moves[i].values[0]
+                        best_move = moves[i].keys[0]
+                    end
+                end
+            end
+        end
+
+        return best_move
+
+    end
+
+
 
 end
 
