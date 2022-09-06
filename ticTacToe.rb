@@ -1,4 +1,6 @@
 class Game
+    attr_accessor :board
+
     def initialize
         @board = ['0','1','2','3','4','5','6','7','8']
         @pos_arrow = 1
@@ -7,9 +9,9 @@ class Game
         @CPU = 'O'        
     end
 
-    def get_board
-        @board
-    end
+    # def get_board
+    #     @board
+    # end
 
     def get_marker
         if @pos_arrow == 1
@@ -75,7 +77,7 @@ class Game
     end
 
     def mark_board choice
-        if is_user_input_valid(choice)
+        if is_user_input_valid(choice) && is_space_free(choice)
             @board[choice.to_i] = get_marker
         end
     end
@@ -113,8 +115,13 @@ class Game
     end
 
     def cpu_pick
-        pick = minimax(@HUMAN)
-        mark_board(pick.to_s)
+
+        if @board[4] == '4'
+            pick = '4'
+        else
+            pick = minimax(@HUMAN).to_s
+        end
+        mark_board(pick)
         change_marker
     end
 

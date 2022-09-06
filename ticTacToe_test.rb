@@ -5,7 +5,7 @@ describe '#Game' do
 
     it 'Has String array (aka the board)' do
         game = Game.new
-        expect(game.get_board).to eq(['0','1','2','3','4','5','6','7','8'])
+        expect(game.board).to eq(['0','1','2','3','4','5','6','7','8'])
     end
 
     it 'Has a Player Marker' do
@@ -20,7 +20,7 @@ describe '#Game' do
 
     it 'Prints the Tic Tac Toe board' do
         game = Game.new
-        expect{game.print_board}.to output(" #{game.get_board[0]} | #{game.get_board[1]} | #{game.get_board[2]} \n===========\n #{game.get_board[3]} | #{game.get_board[4]} | #{game.get_board[5]} \n===========\n #{game.get_board[6]} | #{game.get_board[7]} | #{game.get_board[8]} \n").to_stdout()
+        expect{game.print_board}.to output(" #{game.board[0]} | #{game.board[1]} | #{game.board[2]} \n===========\n #{game.board[3]} | #{game.board[4]} | #{game.board[5]} \n===========\n #{game.board[6]} | #{game.board[7]} | #{game.board[8]} \n").to_stdout()
     end
 
     it 'Ask player to make a selection' do
@@ -88,26 +88,26 @@ describe '#Game' do
     it "Mark the board in the middle" do
         game = Game.new
         game.mark_board('4')
-        expect(game.get_board).to eq (['0','1','2','3','X','5','6','7','8'])
+        expect(game.board).to eq (['0','1','2','3','X','5','6','7','8'])
     end
 
     it "Mark the first spot on the board" do
         game = Game.new
         game.mark_board('0')
-        expect(game.get_board).to eq (['X','1','2','3','4','5','6','7','8'])
+        expect(game.board).to eq (['X','1','2','3','4','5','6','7','8'])
     end
 
     it "Try to mark spot not on the board" do
         game = Game.new
         game.mark_board('9')
-        expect(game.get_board).to eq (['0','1','2','3','4','5','6','7','8'])
+        expect(game.board).to eq (['0','1','2','3','4','5','6','7','8'])
     end
 
     it "Try to mark 6 spot with O" do
         game = Game.new
         game.change_marker
         game.mark_board('6')
-        expect(game.get_board).to eq (['0','1','2','3','4','5','O','7','8'])
+        expect(game.board).to eq (['0','1','2','3','4','5','O','7','8'])
     end
 
     it "When the user input is already taken" do
@@ -121,7 +121,7 @@ describe '#Game' do
         game.mark_board('4')
         game.change_marker
         game.mark_board('3')
-        expect(game.get_board).to eq (['0','1','2','O','X','5','6','7','8'])
+        expect(game.board).to eq (['0','1','2','O','X','5','6','7','8'])
     end
 
 
@@ -244,7 +244,7 @@ describe '#Game' do
         game.change_marker
         game.cpu_pick
         game.print_board
-        expect(game.get_board).not_to eq(['0','X','2','3','4','5','6','7','8'])
+        expect(game.board).not_to eq(['0','X','2','3','4','5','6','7','8'])
     end
 
     it "CPU picks a spot" do
@@ -254,7 +254,7 @@ describe '#Game' do
         game.cpu_pick
         game.mark_board('2')
         game.print_board
-        expect(game.get_board).not_to eq(['0','X','2','3','4','5','6','7','8'])
+        expect(game.board).not_to eq(['0','X','2','3','4','5','6','7','8'])
     end
 
     it "Returns the available spots on the board" do
@@ -275,6 +275,21 @@ describe '#Game' do
         best_move = game.minimax('O')
         expect(best_move).to eq(4)
 
+    end
+
+    it 'CPU chooses the middle first if its open' do
+        game = Game.new
+        game.mark_board('0')
+        game.change_marker
+        game.cpu_pick
+        expect(game.board[4]).to eq('O')
+    end
+
+    it 'Game is over' do
+        game = Game.new
+        game.board = ['X','X','O','O','O','X','X','X','O']
+        game.cpu_pick
+        expect(game.board[0]).to eq('X')
     end
 
 end
