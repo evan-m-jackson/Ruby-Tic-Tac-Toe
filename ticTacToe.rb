@@ -116,8 +116,8 @@ class Game
 
     def cpu_pick
 
-        if @board[4] == '4'
-            pick = '4'
+        if get_available_spots.length == 8
+            pick = cpu_first_pick
         else
             pick = minimax(@HUMAN).to_s
         end
@@ -133,6 +133,14 @@ class Game
             end
         end
         available
+    end
+
+    def cpu_first_pick
+        if @board[4] == '4'
+            return '4'
+        else
+            return '8'
+        end
     end
 
     def minimax player

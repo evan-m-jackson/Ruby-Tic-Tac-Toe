@@ -285,11 +285,12 @@ describe '#Game' do
         expect(game.board[4]).to eq('O')
     end
 
-    it 'Game is over' do
+    it 'If human picks the middle first, the CPU picks the corner' do
         game = Game.new
-        game.board = ['X','X','O','O','O','X','X','X','O']
+        game.mark_board('4')
+        game.change_marker
         game.cpu_pick
-        expect(game.board[0]).to eq('X')
+        expect(game.board[8]).to eq('O')
     end
 
 end
