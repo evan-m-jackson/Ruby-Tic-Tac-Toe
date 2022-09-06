@@ -2,22 +2,19 @@ class Game
     attr_accessor :board
 
     def initialize
-        @board = ['0','1','2','3','4','5','6','7','8']
+        @board = ['1','2','3','4','5','6','7','8', '9']
         @pos_arrow = 1
         @WINNING_COMBINATIONS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
         @HUMAN = 'X'
         @CPU = 'O'        
     end
 
-    # def get_board
-    #     @board
-    # end
 
     def get_marker
         if @pos_arrow == 1
-            'X'
+            @HUMAN
         else
-            'O'
+            @CPU
         end
     end
 
@@ -30,7 +27,7 @@ class Game
     end
     
     def print_board
-        board_string = ""
+        board_string = "\n"
 
         @board.each_with_index do |space, idx|
             if idx == 3 || idx == 6
@@ -39,13 +36,15 @@ class Game
                 board_string += "|"
             end
             board_string += " #{space} " 
-        end    
+        end
+        
+        board_string += "\n"
         
         puts board_string
     end
 
     def selection_message
-        puts "Please choose a spot on the board between 0-8: \n"
+        puts "\nPlease choose a spot on the board between 1-9: \n"
     end
 
     def get_player_input
@@ -57,7 +56,7 @@ class Game
     def is_user_input_valid choice
         if choice !~ /\D/ && choice.length > 0
             num = choice.to_i
-            if num <= 8 && num >= 0
+            if num <= 9 && num >= 1
                 true
             else
                 false   
@@ -69,7 +68,7 @@ class Game
 
     def is_space_free choice
         num = choice.to_i
-        if choice == @board[num]
+        if choice == @board[num - 1]
             true
         else
             false
@@ -78,7 +77,7 @@ class Game
 
     def mark_board choice
         if is_user_input_valid(choice) && is_space_free(choice)
-            @board[choice.to_i] = get_marker
+            @board[choice.to_i - 1] = get_marker
         end
     end
 
@@ -93,8 +92,8 @@ class Game
     end
 
     def game_over
-        (0..8).each do |n|
-            if @board[n] == n.to_s
+        (1..9).each do |n|
+            if @board[n-1] == n.to_s
                 return false
             end
         end
@@ -128,7 +127,7 @@ class Game
     def get_available_spots
         available = []
         @board.each_with_index do |spot, idx|
-            if @board[idx] != 'X' && @board[idx] != 'O'
+            if @board[idx] != @HUMAN && @board[idx] != @CPU
                 available << idx
             end
         end
@@ -136,10 +135,10 @@ class Game
     end
 
     def cpu_first_pick
-        if @board[4] == '4'
-            return '4'
+        if @board[4] == '5'
+            return '5'
         else
-            return '8'
+            return '9'
         end
     end
 
@@ -171,7 +170,7 @@ class Game
                 move[spot] = result
             end
 
-            @board[spot] = spot.to_s
+            @board[spot] = (spot + 1).to_s
 
             moves << move
         end
@@ -200,7 +199,7 @@ class Game
             end
         end
 
-        return best_move
+        return best_move + 1
 
     end
 
