@@ -113,13 +113,8 @@ class Game
     end
 
     def cpu_pick
-        (0..8).each do |num|
-            str = num.to_s
-            if @board[num] == str
-                mark_board(str)
-                break
-            end
-        end
+        pick = minimax(@HUMAN)
+        mark_board(pick.to_s)
         change_marker
     end
 
