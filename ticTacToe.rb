@@ -147,7 +147,7 @@ class Game
 
         available.each do |i|
             @board[i] = 'O'
-            score = minimax(0, false)
+            score = minimax(false)
             @board[i] = (i + 1).to_s
             if score > best_score
                 best_score = score
@@ -157,7 +157,7 @@ class Game
         return best_move + 1
     end
 
-    def minimax(depth, isMaximizing)
+    def minimax(isMaximizing)
         result = winning_player
         if result == 'O'
             return 1
@@ -173,7 +173,7 @@ class Game
 
             available.each do |i|
                 @board[i] = 'O'
-                score = minimax(depth + 1, false)
+                score = minimax(false)
                 @board[i] = (i + 1).to_s
                 best_score = [best_score, score].max
             end
@@ -185,7 +185,7 @@ class Game
 
             available.each do |i|
                 @board[i] = 'X'
-                score = minimax(depth + 1, true)
+                score = minimax(true)
                 @board[i] = (i + 1).to_s
                 best_score = [best_score, score].min
             end
