@@ -250,7 +250,7 @@ describe '#Game' do
             game.mark_board(i)
             game.change_marker
         end
-        best_move = game.minimax('O')
+        best_move = game.best_move_to_make
         expect(best_move).to eq(5)
 
     end

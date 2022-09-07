@@ -5,8 +5,7 @@ game = Game.new
 game.welcome
 
 while !game.game_over && !game.player_wins
-    # game.print_board
-    puts game.return_board
+    game.print_board
     
     choice = game.get_player_input
 
@@ -18,6 +17,9 @@ while !game.game_over && !game.player_wins
     else
         game.move_confirmation(choice)
     end
+
+1
+1
 
 end
 

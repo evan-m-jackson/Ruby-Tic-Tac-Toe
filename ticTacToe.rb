@@ -38,13 +38,11 @@ class Game
             board_string += " #{space} " 
         end
         
-        board_string += "\n"
-        
-        puts board_string
+        puts board_string + "\n"
     end
 
     def selection_message
-        puts "\nPlease choose a spot on the board between 1-9: \n"
+        puts "\nPlease choose a spot on the board between 1-9: \r"
     end
 
     def get_player_input
@@ -118,7 +116,7 @@ class Game
         if get_available_spots.length == 8
             pick = cpu_first_pick
         else
-            pick = minimax(@HUMAN).to_s
+            pick = best_move_to_make.to_s
         end
         mark_board(pick)
         change_marker
@@ -142,67 +140,59 @@ class Game
         end
     end
 
-    def minimax player
-        available_spots = get_available_spots
-
-        if winning_player == @HUMAN
-            return -10
-        elsif winning_player == @CPU
-            return 10
-        elsif available_spots.length == 0
-            return 0
-        end
-
-        moves = []
-
-        available_spots.each do |spot|
-            move = {}
-
-            move[spot] = 0
-
-            @board[spot] = player
-
-            if player == @CPU
-                result = minimax(@HUMAN)
-                move[spot] = result
-            else
-                result = minimax(@CPU)
-                move[spot] = result
-            end
-
-            @board[spot] = (spot + 1).to_s
-
-            moves << move
-        end
-
+    def best_move_to_make
+        best_score = -10000
         best_move = 0
+        available = get_available_spots
 
-        if player == @CPU
-            best_score = -10000
-            (0..moves.length-1).each do |i|
-                if !moves[i].values[0].nil?
-                    if moves[i].values[0] > best_score
-                    best_score = moves[i].values[0]
-                    best_move = moves[i].keys[0]
-                    end
-                end
-            end
-        else
-            best_score = 10000
-            (0..moves.length-1).each do |i|
-                if !moves[i].values[0].nil?
-                    if moves[i].values[0] < best_score
-                        best_score = moves[i].values[0]
-                        best_move = moves[i].keys[0]
-                    end
-                end
+        available.each do |i|
+            @board[i] = 'O'
+            score = minimax(0, false)
+            @board[i] = (i + 1).to_s
+            if score > best_score
+                best_score = score
+                best_move = i
             end
         end
-
         return best_move + 1
-
     end
 
+    def minimax(depth, isMaximizing)
+        result = winning_player
+        if result == 'O'
+            return 1
+        elsif result == 'X'
+            return -1
+        elsif game_over
+            return 0
+        end
+        
+        if isMaximizing
+            best_score = -10000
+            available = get_available_spots
+
+            available.each do |i|
+                @board[i] = 'O'
+                score = minimax(depth + 1, false)
+                @board[i] = (i + 1).to_s
+                best_score = [best_score, score].max
+            end
+            return best_score
+
+        else
+            best_score = 10000
+            available = get_available_spots
+
+            available.each do |i|
+                @board[i] = 'X'
+                score = minimax(depth + 1, true)
+                @board[i] = (i + 1).to_s
+                best_score = [best_score, score].min
+            end
+            return best_score
+        end
+         
+    end
 
 
 end
