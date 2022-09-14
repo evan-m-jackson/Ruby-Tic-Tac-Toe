@@ -1,4 +1,4 @@
-require 'rspec/autorun'
+require 'rspec'
 require './ticTacToe'
 
 describe '#Game' do
