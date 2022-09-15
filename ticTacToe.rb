@@ -1,8 +1,6 @@
 class Game
-  attr_accessor :board
 
   def initialize
-    @board = %w[1 2 3 4 5 6 7 8 9]
     @pos_arrow = 1
     @WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
     @HUMAN = 'X'
@@ -25,21 +23,6 @@ class Game
     puts 'WELCOME TO TIC TAC TOE!'
   end
 
-  def print_board
-    board_string = "\n"
-
-    @board.each_with_index do |space, idx|
-      if [3, 6].include?(idx)
-        board_string += "\n===========\n"
-      elsif idx % 3 != 0
-        board_string += '|'
-      end
-      board_string += " #{space} "
-    end
-
-    puts board_string + "\n"
-  end
-
   def selection_message
     puts "\nPlease choose a spot on the board between 1-9: \r"
   end
@@ -52,10 +35,6 @@ class Game
   def is_space_free(choice)
     num = choice.to_i
     choice == @board[num - 1]
-  end
-
-  def mark_board(choice)
-    @board[choice.to_i - 1] = get_marker if is_user_input_valid(choice) && is_space_free(choice)
   end
 
   def move_confirmation(choice)
