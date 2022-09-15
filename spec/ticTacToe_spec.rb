@@ -1,6 +1,7 @@
 require 'rspec'
 require './ticTacToe'
 require './lib/board'
+require './lib/player_choice'
 
 describe 'Board' do
   before(:each) do
@@ -11,6 +12,33 @@ describe 'Board' do
   expect(@board.board).to eq(%w[1 2 3 4 5 6 7 8 9])
   end
 
+  it 'Mark the board in the middle with an X' do
+    @board.mark_board('5', 'X')
+    expect(@board.board[4]).to eq('X')
+  end
+
+end
+
+describe 'PlayerChoice' do
+  before(:each) do
+    @choice = PlayerChoice.new
+  end
+  
+  it 'When the user input is valid' do
+    expect(@choice.is_user_input_valid('5')).to be true
+  end
+
+  it 'When the user inputs an incorrect number' do
+    expect(@choice.is_user_input_valid('0')).to be false
+  end
+
+  it 'When the user inputs an incorrect number' do
+    expect(@choice.is_user_input_valid('b')).to be false
+  end
+
+  it 'When the user inputs an incorrect number' do
+    expect(@choice.is_user_input_valid('')).to be false
+  end
 end
 
 describe 'Game' do
@@ -21,46 +49,6 @@ describe 'Game' do
 
   it 'Has a Player Marker' do
     expect(@game.get_marker).to eq('X')
-  end
-
-  it 'When the user input is valid' do
-    expect(@game.is_user_input_valid('5')).to be true
-  end
-
-  it 'When the user input is valid Pt 2' do
-    expect(@game.is_user_input_valid('0')).to be false
-  end
-
-  it 'When the user input is valid Pt 2' do
-    expect(@game.is_user_input_valid('8')).to be true
-  end
-
-  it "When the user input isn't valid" do
-    expect(@game.is_user_input_valid('10')).to be false
-  end
-
-  it "When the user input isn't valid" do
-    expect(@game.is_user_input_valid('15')).to be false
-  end
-
-  it "When the user input isn't an integer" do
-    expect(@game.is_user_input_valid('a')).to be false
-  end
-
-  it "When the user input isn't an integer Pt 2" do
-    expect(@game.is_user_input_valid('1.1')).to be false
-  end
-
-  it "When the user input isn't an integer Pt 3" do
-    expect(@game.is_user_input_valid('1abc23')).to be false
-  end
-
-  it "When the user input isn't an integer Pt 4" do
-    expect(@game.is_user_input_valid(' ')).to be false
-  end
-
-  it 'When the user input is an Empty String' do
-    expect(@game.is_user_input_valid('')).to be false
   end
 
   it 'Mark the board in the middle' do
