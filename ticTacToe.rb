@@ -49,19 +49,6 @@ class Game
     gets.chomp.to_s
   end
 
-  def is_user_input_valid(choice)
-    if choice !~ /\D/ && choice.length > 0
-      num = choice.to_i
-      if num <= 9 && num >= 1
-        true
-      else
-        false
-      end
-    else
-      false
-    end
-  end
-
   def is_space_free(choice)
     num = choice.to_i
     choice == @board[num - 1]
@@ -73,7 +60,7 @@ class Game
 
   def move_confirmation(choice)
     if !is_user_input_valid(choice)
-      puts "Sorry that is not a valid move. Please select an integer between 0 and 8.\n"
+      puts "Sorry that is not a valid move. Please select an integer between 1 and 9.\n"
     elsif !is_space_free(choice)
       puts 'Sorry this space is taken. Please select another.'
     else
