@@ -1,6 +1,6 @@
 require 'rspec'
 require './ticTacToe'
-require './board'
+require './lib/board'
 
 describe 'Board' do
   before(:each) do
