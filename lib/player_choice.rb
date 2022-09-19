@@ -16,11 +16,7 @@ class PlayerChoice
     def is_user_input_valid(choice)
         if choice !~ /\D/ && choice.length > 0
           num = choice.to_i
-          if num <= 9 && num >= 1
-            true
-          else
-            false
-          end
+          return num <= 9 && num >= 1
         else
           false
         end
@@ -31,7 +27,7 @@ class PlayerChoice
         choice == board[num - 1]
     end
 
-    def move_confirmation(board, choice)
+    def move_confirmation_message(board, choice)
         if !is_user_input_valid(choice)
           puts "Sorry that is not a valid move. Please select an integer between 1 and 9.\n"
         elsif !is_space_free(board, choice)
