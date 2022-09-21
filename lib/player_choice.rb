@@ -1,17 +1,17 @@
 class PlayerChoice
 
-    def initialize
+    def initialize( input: $stdin)
         @HUMAN = 'X'
+        @input = input
     end
 
     def selection_message
         puts "\nPlease choose a spot on the board between 1-9: \r"
-      end
+    end
     
-      def get_player_input
-        selection_message
-        gets.chomp.to_s
-      end
+    def get_player_input
+      @input.gets.chomp.to_s
+    end
 
     def is_user_input_valid(choice)
         if choice !~ /\D/ && choice.length > 0
@@ -20,7 +20,7 @@ class PlayerChoice
         else
           false
         end
-      end
+    end
 
     def is_space_free(board, choice)
         num = choice.to_i
@@ -35,5 +35,5 @@ class PlayerChoice
         else
           puts 'Thank you!'
         end
-      end
+    end
 end
