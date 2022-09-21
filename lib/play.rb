@@ -67,6 +67,6 @@ game_over = GameOver.new
 cpu = CPUChoice.new(game_over)
 player = PlayerChoice.new
 
-tic_tac_toe = Play.new(board, cpu, player, game_over)
+# tic_tac_toe = Play.new(board, cpu, player, game_over)
 
-tic_tac_toe.run
+# tic_tac_toe.run

@@ -17,6 +17,12 @@ describe '.cpu_pick' do
         expect(@playing_board).not_to eq(%w[1 X 3 4 5 6 7 8 9])
     end
 
+    it 'CPU does not pick a spot when the board is full' do
+        @playing_board = %w[O X X X X O O O X]
+        @cpu.cpu_pick(@playing_board)
+        expect(@playing_board).to eq(%w[O X X X X O O O X])
+    end
+
 end
 
 describe '.get_available_spots' do
@@ -31,6 +37,12 @@ describe '.best_move_to_make' do
     @playing_board = %w[X 2 O O 5 O 7 X X]
     best_move = @cpu.best_move_to_make(@playing_board)
     expect(best_move).to eq(5)
+  end
+
+  it 'CPU does not pick the first spot when the game is over' do
+    @playing_board = %w[X O O O X X X X O]
+    best_move = @cpu.best_move_to_make(@playing_board)
+    expect(best_move).to eq (0)
   end
 end
 

@@ -5,13 +5,15 @@ class CPUChoice
     end
 
     def cpu_pick board
+      if get_available_spots(board).length > 0
         pick = if get_available_spots(board).length == 8
                  cpu_first_pick(board)
                else
-                 best_move_to_make.to_s
+                 best_move_to_make(board).to_s
                end
         board[pick.to_i - 1] = 'O'
       end
+    end
     
       def get_available_spots board
         available = []
@@ -33,6 +35,10 @@ class CPUChoice
         best_score = -10_000
         best_move = 0
         available = get_available_spots(board)
+
+        if available.length == 0
+          return 0
+        end
     
         available.each do |i|
           board[i] = 'O'
@@ -47,30 +53,30 @@ class CPUChoice
       end
     
       def minimax(isMaximizing, board)
-        result = game_over.which_player_wins(board)
+        result = @game_over.which_player_wins(board)
         if result == 'O'
           return 1
         elsif result == 'X'
           return -1
-        elsif game_over
+        elsif @game_over.is_game_over(board)
           return 0
         end
     
         if isMaximizing
           best_score = -10_000
-          available = get_available_spots
+          available = get_available_spots(board)
     
           available.each do |i|
             board[i] = 'O'
             score = minimax(false, board)
-            @board[i] = (i + 1).to_s
+            board[i] = (i + 1).to_s
             best_score = [best_score, score].max
           end
           best_score
     
         else
           best_score = 10_000
-          available = get_available_spots
+          available = get_available_spots(board)
     
           available.each do |i|
             board[i] = 'X'

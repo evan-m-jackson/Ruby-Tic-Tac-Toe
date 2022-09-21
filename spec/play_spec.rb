@@ -10,8 +10,6 @@ describe 'Play' do
         @end_of_game = GameOver.new
         @board = Board.new
         @cpu = CPUChoice.new(@end_of_game)
-        @player = PlayerChoice.new
-        @play = Play.new(@board, @cpu, @player, @end_of_game) 
     end
 
  describe '.player_picks_a_spot' do
@@ -30,23 +28,5 @@ describe 'Play' do
         expect(@play.player_picks_a_spot).to be false 
     end
  end
-
- describe '.while_loop_for_player_picking_spot' do
-    it 'Method continues to run until a valid option is chosen' do
-        @play.while_loop_for_player_picking_spot
-    end
- end
-
- describe '.runs_game_until_win_or_draw' do
-    it 'Player and CPU take turns playing' do
-        @play.run_game_until_win_or_draw
-    end
-end
-
-describe '.run' do
-    it 'Runs the whole game' do
-        @play.run
-    end
-end
 
 end
