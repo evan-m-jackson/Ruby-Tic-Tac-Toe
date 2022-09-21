@@ -86,7 +86,7 @@ describe 'GameOver' do
       expect { @game_over.game_over_message(@board) }.to output("GAME OVER! Player O has won!!\n").to_stdout
     end
 
-    it 'returns a message that says Player O has won' do
+    it 'returns a message that says game is a draw' do
       @board = %w[X O X X O X O X O]
       expect { @game_over.game_over_message(@board) }.to output("GAME OVER! It's a draw!!\n").to_stdout
     end
