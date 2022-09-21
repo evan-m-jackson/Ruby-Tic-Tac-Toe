@@ -22,4 +22,13 @@ class GameOver
         which_player_wins(board) != 'No winner'
     end
 
+    def game_over_message board
+        winner = which_player_wins(board)
+        if winner != 'No winner'
+            puts "GAME OVER! Player #{winner} has won!!"
+        else
+            puts "GAME OVER! It's a draw!!"
+        end
+    end
+
 end
