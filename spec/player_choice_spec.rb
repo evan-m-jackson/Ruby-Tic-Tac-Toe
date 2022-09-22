@@ -53,7 +53,7 @@ describe 'PlayerChoice' do
   describe '.move_confirmation_message' do
     it 'message prints if a spot is taken' do
       board = %w[X 2 3 4 5 6 7 8 9]
-      
+
       @choice.move_confirmation_message(board, '1')
 
       expect(@test_ui.sorry_taken_called).to be true
@@ -61,13 +61,10 @@ describe 'PlayerChoice' do
 
     it 'message prints for an invalid choice' do
       board = Board.new.board
-     
-      @choice.move_confirmation_message(board, 'a')
 
+      @choice.move_confirmation_message(board, 'a')
 
       expect(@test_ui.sorry_invalid_move).to be true
     end
-
-
   end
 end
