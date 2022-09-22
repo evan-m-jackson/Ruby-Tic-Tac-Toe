@@ -1,10 +1,24 @@
 require 'rspec'
 require './lib/player_choice'
 require './lib/board'
+require 'stringio'
+
+class TestUI
+  attr_reader :sorry_taken_called, :sorry_invalid_move
+
+  def sorry_taken
+    @sorry_taken_called = true
+  end
+
+  def sorry_invalid
+    @sorry_invalid_move = true
+  end
+end
 
 describe 'PlayerChoice' do
   before(:each) do
-    @choice = PlayerChoice.new
+    @test_ui = TestUI.new
+    @choice = PlayerChoice.new(output: @test_ui)
   end
 
   describe '.is_user_input_valid' do
@@ -39,16 +53,21 @@ describe 'PlayerChoice' do
   describe '.move_confirmation_message' do
     it 'message prints if a spot is taken' do
       board = %w[X 2 3 4 5 6 7 8 9]
-      expect do
-        @choice.move_confirmation_message(board, '1')
-      end.to output("Sorry this space is taken. Please select another.\n").to_stdout
+      
+      @choice.move_confirmation_message(board, '1')
+
+      expect(@test_ui.sorry_taken_called).to be true
     end
 
     it 'message prints for an invalid choice' do
       board = Board.new.board
-      expect do
-        @choice.move_confirmation_message(board, 'a')
-      end.to output("Sorry that is not a valid move. Please select an integer between 1 and 9.\n").to_stdout
+     
+      @choice.move_confirmation_message(board, 'a')
+
+
+      expect(@test_ui.sorry_invalid_move).to be true
     end
+
+
   end
 end

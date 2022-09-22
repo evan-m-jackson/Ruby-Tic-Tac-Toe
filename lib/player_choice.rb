@@ -1,7 +1,8 @@
 class PlayerChoice
-  def initialize(input: $stdin)
+  def initialize(input: $stdin, output: output)
     @HUMAN = 'X'
     @input = input
+    @output = output
   end
 
   def selection_message
@@ -28,9 +29,9 @@ class PlayerChoice
 
   def move_confirmation_message(board, choice)
     if !is_user_input_valid(choice)
-      puts "Sorry that is not a valid move. Please select an integer between 1 and 9.\n"
+      @output.sorry_invalid
     elsif !is_space_free(board, choice)
-      puts 'Sorry this space is taken. Please select another.'
+      @output.sorry_taken
     else
       puts 'Thank you!'
     end
