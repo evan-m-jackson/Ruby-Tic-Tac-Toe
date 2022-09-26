@@ -1,6 +1,7 @@
 class GameOver
-  def initialize
+  def initialize(output: output)
     @WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    @output = output
   end
 
   def is_game_over(board)
@@ -24,9 +25,9 @@ class GameOver
   def game_over_message(board)
     winner = which_player_wins(board)
     if winner != 'No winner'
-      puts "GAME OVER! Player #{winner} has won!!"
+      @output.game_over_win(winner)
     else
-      puts "GAME OVER! It's a draw!!"
+      @output.game_over_draw
     end
   end
 end

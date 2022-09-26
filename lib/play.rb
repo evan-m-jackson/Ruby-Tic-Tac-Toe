@@ -2,6 +2,7 @@ require './lib/board'
 require './lib/cpu_choice'
 require './lib/game_over'
 require './lib/player_choice'
+require './lib/command_ui'
 
 class Play
   attr_reader :board, :cpu, :player, :game_over

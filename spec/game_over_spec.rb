@@ -1,12 +1,26 @@
 require 'rspec'
 require './lib/board'
 require './lib/game_over'
+require './spec/player_choice_spec'
+
+class TestUI
+  attr_reader :game_over_win_called, :game_over_draw_called
+
+  def game_over_win(_player)
+    @game_over_win_called = true
+  end
+
+  def game_over_draw
+    @game_over_draw_called = true
+  end
+end
 
 describe 'GameOver' do
   before(:each) do
     @game = Board.new
     @board = @game.board
-    @game_over = GameOver.new
+    @test_ui = TestUI.new
+    @game_over = GameOver.new(output: @test_ui)
   end
 
   describe '.is_game_over' do
@@ -78,17 +92,20 @@ describe 'GameOver' do
   describe '.game_over_message' do
     it 'returns a message that says Player X has won' do
       @board = %w[X X X O O 6 7 8 9]
-      expect { @game_over.game_over_message(@board) }.to output("GAME OVER! Player X has won!!\n").to_stdout
+      @game_over.game_over_message(@board)
+      expect(@test_ui.game_over_win_called).to be true
     end
 
     it 'returns a message that says Player O has won' do
       @board = %w[X X 3 O O O X 8 9]
-      expect { @game_over.game_over_message(@board) }.to output("GAME OVER! Player O has won!!\n").to_stdout
+      @game_over.game_over_message(@board)
+      expect(@test_ui.game_over_win_called).to be true
     end
 
     it 'returns a message that says game is a draw' do
       @board = %w[X O X X O X O X O]
-      expect { @game_over.game_over_message(@board) }.to output("GAME OVER! It's a draw!!\n").to_stdout
+      @game_over.game_over_message(@board)
+      expect(@test_ui.game_over_draw_called).to be true
     end
   end
 end
