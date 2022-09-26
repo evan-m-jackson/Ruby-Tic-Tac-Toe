@@ -3,6 +3,8 @@ class CPUChoice
 
   def initialize(game_over)
     @game_over = game_over
+    @ai = 'O'
+    @human = 'X'
   end
 
   def cpu_pick(board)
@@ -19,7 +21,7 @@ class CPUChoice
   def get_available_spots(board)
     available = []
     board.each_with_index do |_spot, idx|
-      available << idx if board[idx] != 'X' && board[idx] != 'O'
+      available << idx if board[idx] != @ai && board[idx] != @human
     end
     available
   end
@@ -40,7 +42,7 @@ class CPUChoice
     return 0 if available.length == 0
 
     available.each do |i|
-      board[i] = 'O'
+      board[i] = @ai
       score = minimax(false, board)
       board[i] = (i + 1).to_s
       if score > best_score
@@ -52,38 +54,34 @@ class CPUChoice
   end
 
   def minimax(isMaximizing, board)
-    result = @game_over.which_player_wins(board)
-    if result == 'O'
-      return 1
-    elsif result == 'X'
-      return -1
+    if @game_over.which_player_wins(board) == @ai
+      return 10
+    elsif @game_over.which_player_wins(board) == @human
+      return -10
     elsif @game_over.is_game_over(board)
       return 0
     end
 
     if isMaximizing
-      best_score = -10_000
       available = get_available_spots(board)
-
+      best_score = -1000
       available.each do |i|
-        board[i] = 'O'
+        board[i] = @ai
         score = minimax(false, board)
         board[i] = (i + 1).to_s
         best_score = [best_score, score].max
       end
-      best_score
 
     else
-      best_score = 10_000
       available = get_available_spots(board)
-
+      best_score = 1000
       available.each do |i|
-        board[i] = 'X'
+        board[i] = @human
         score = minimax(true, board)
         board[i] = (i + 1).to_s
         best_score = [best_score, score].min
       end
-      best_score
     end
+    best_score
   end
 end
