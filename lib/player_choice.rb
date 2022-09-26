@@ -6,7 +6,7 @@ class PlayerChoice
   end
 
   def selection_message
-    puts "\nPlease choose a spot on the board between 1-9: \r"
+    @output.selection_message
   end
 
   def get_player_input

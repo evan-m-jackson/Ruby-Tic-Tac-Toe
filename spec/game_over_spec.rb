@@ -2,18 +2,7 @@ require 'rspec'
 require './lib/board'
 require './lib/game_over'
 require './spec/player_choice_spec'
-
-class TestUI
-  attr_reader :game_over_win_called, :game_over_draw_called
-
-  def game_over_win(_player)
-    @game_over_win_called = true
-  end
-
-  def game_over_draw
-    @game_over_draw_called = true
-  end
-end
+require './mock/test_ui'
 
 describe 'GameOver' do
   before(:each) do

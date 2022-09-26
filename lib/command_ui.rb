@@ -14,4 +14,12 @@ class CommandUI
   def game_over_draw
     puts "GAME OVER! It's a draw!!"
   end
+
+  def give_welcome_message
+    puts 'WELCOME TO TIC-TAC-TOE!!!'
+  end
+
+  def selection_message
+    puts "\nPlease choose a spot on the board between 1-9: \r"
+  end
 end
