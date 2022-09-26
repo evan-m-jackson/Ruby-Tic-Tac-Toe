@@ -7,15 +7,28 @@ require './lib/command_ui'
 class Play
   attr_reader :board, :cpu, :player, :game_over
 
-  def initialize(board, cpu, player, game_over)
+  def initialize(board, cpu, player, game_over, output: output)
     @board = board
     @cpu = cpu
     @player = player
     @game_over = game_over
+    @output = output
   end
 
+  def run
+    welcome_message
+
+    @board.print_board
+
+    run_game_until_win_or_draw
+
+    @game_over.game_over_message(@board.board)
+  end
+
+  private
+
   def welcome_message
-    puts 'WELCOME TO TIC TAC TOE!'
+    @output.give_welcome_message
   end
 
   def player_picks_a_spot
@@ -47,15 +60,5 @@ class Play
 
       @board.print_board
     end
-  end
-
-  def run
-    welcome_message
-
-    @board.print_board
-
-    run_game_until_win_or_draw
-
-    @game_over.game_over_message(@board.board)
   end
 end
