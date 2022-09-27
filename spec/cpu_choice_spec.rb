@@ -2,12 +2,14 @@ require 'rspec'
 require './lib/cpu_choice'
 require './lib/board'
 require './lib/game_over'
+require './lib/minimax'
 
 describe 'CPUChoice' do
   before(:each) do
     @board = Board.new
     @playing_board = @board.board
-    @cpu = CPUChoice.new(GameOver.new)
+    @minimax = Minimax.new(GameOver.new)
+    @cpu = CPUChoice.new(@minimax)
   end
 
   describe '.cpu_pick' do
@@ -21,13 +23,6 @@ describe 'CPUChoice' do
       @playing_board = %w[O X X X X O O O X]
       @cpu.cpu_pick(@playing_board)
       expect(@playing_board).to eq(%w[O X X X X O O O X])
-    end
-  end
-
-  describe '.get_available_spots' do
-    it 'Returns the available spots on the board' do
-      @playing_board = %w[X O X O X O 7 8 9]
-      expect(@cpu.get_available_spots(@playing_board)).to eq([6, 7, 8])
     end
   end
 
@@ -54,37 +49,6 @@ describe 'CPUChoice' do
     it 'If human picks the middle first, the CPU picks the corner' do
       @playing_board = %w[1 2 3 4 X 6 7 8 9]
       expect(@cpu.cpu_first_pick(@playing_board)).to eq('9')
-    end
-  end
-
-  describe '.minimax' do
-    before(:each) do
-      @isMaximizing = true
-    end
-
-    it 'returns 10 if the AI could win in the spot' do
-      @playing_board = %w[O O O 4 5 6 7 8 9]
-      expect(@cpu.minimax(@isMaximizing, @playing_board)).to eq(10)
-    end
-
-    it "returns -10 if the AI's opponent is winning" do
-      @playing_board = %w[X X X 4 5 6 7 8 9]
-      expect(@cpu.minimax(@isMaximizing, @playing_board)).to eq(-10)
-    end
-
-    it 'returns 0 if the game is a draw' do
-      @playing_board = %w[X O X O X O O X O]
-      expect(@cpu.minimax(@isMaximizing, @playing_board)).to eq(0)
-    end
-
-    it 'returns the best score to win the game' do
-      @playing_board = %w[O 2 O X 5 X 7 8 9]
-      expect(@cpu.minimax(@isMaximizing, @playing_board)).to eq(10)
-    end
-
-    it 'return the best score (-10) to not let the other player win' do
-      @playing_board = %w[X X 3 O 5 6 7 8 9]
-      expect(@cpu.minimax(@isMaximizing, @playing_board)).to eq(-10)
     end
   end
 end

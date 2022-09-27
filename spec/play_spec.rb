@@ -2,6 +2,7 @@ require 'rspec'
 require './lib/board'
 require './lib/cpu_choice'
 require './lib/game_over'
+require './lib/minimax'
 require './lib/player_choice'
 require './lib/play'
 require './spec/player_choice_spec'
@@ -13,8 +14,9 @@ describe 'Play' do
   before(:each) do
     @test_ui = TestUI.new
     @end_of_game = GameOver.new(output: @test_ui)
+    @ai_function = Minimax.new(@end_of_game)
     @board = Board.new
-    @cpu = CPUChoice.new(@end_of_game)
+    @cpu = CPUChoice.new(@ai_function)
   end
 
   describe '.run' do
