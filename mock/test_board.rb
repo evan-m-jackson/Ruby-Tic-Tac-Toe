@@ -11,6 +11,6 @@ class TestBoard
   end
 
   def mark_board(choice, marker)
-    @board[choice.to_i - 1] = marker
+    @board[choice] = marker
   end
 end
