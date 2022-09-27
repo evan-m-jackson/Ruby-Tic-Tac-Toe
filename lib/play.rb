@@ -34,12 +34,18 @@ class Play
   def player_picks_a_spot
     choice = @player.get_player_input
     is_choice_valid = @player.is_user_input_valid(choice)
-    is_choice_available = @player.is_space_free(@board.board, choice)
-    if is_choice_available && is_choice_valid
-      @board.mark_board(choice, 'X')
-      true
+    if is_choice_valid
+      choice_idx = @player.get_choice_idx(choice)
+      is_choice_available = @player.is_space_free(@board.board, choice)
+      if is_choice_available
+        @board.mark_board(choice_idx, 'X')
+        true
+      else
+        @output.sorry_taken
+        false
+      end
     else
-      @player.move_confirmation_message(@board.board, choice)
+      @output.sorry_invalid
       false
     end
   end

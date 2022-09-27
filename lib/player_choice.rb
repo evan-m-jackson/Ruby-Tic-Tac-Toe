@@ -23,17 +23,12 @@ class PlayerChoice
   end
 
   def is_space_free(board, choice)
-    num = choice.to_i
-    choice == board[num - 1]
+    choice == board[get_choice_idx(choice)]
   end
 
-  def move_confirmation_message(board, choice)
-    if !is_user_input_valid(choice)
-      @output.sorry_invalid
-    elsif !is_space_free(board, choice)
-      @output.sorry_taken
-    else
-      puts 'Thank you!'
-    end
+  def get_choice_idx(choice)
+    num = choice.to_i
+    num - 1
   end
+
 end

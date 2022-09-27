@@ -11,17 +11,17 @@ class CPUChoice
       pick = if board_length == 8
                cpu_first_pick(board)
              else
-               best_move_to_make(board).to_s
+               best_move_to_make(board)
              end
-      board[pick.to_i - 1] = 'O'
+      board[pick] = @ai_function.marker
     end
   end
 
   def cpu_first_pick(board)
     if board[4] == '5'
-      '5'
+      4
     else
-      '9'
+      8
     end
   end
 
@@ -41,6 +41,6 @@ class CPUChoice
         best_move = i
       end
     end
-    best_move + 1
+    best_move
   end
 end

@@ -45,26 +45,10 @@ describe 'PlayerChoice' do
       board = game.board
       choice = '1'
       marker = 'X'
-      game.mark_board(choice, marker)
+      idx = @choice.get_choice_idx(choice)
+      game.mark_board(idx, marker)
       expect(@choice.is_space_free(board, choice)).to be false
     end
   end
 
-  describe '.move_confirmation_message' do
-    it 'message prints if a spot is taken' do
-      board = %w[X 2 3 4 5 6 7 8 9]
-
-      @choice.move_confirmation_message(board, '1')
-
-      expect(@test_ui.sorry_taken_called).to be true
-    end
-
-    it 'message prints for an invalid choice' do
-      board = Board.new.board
-
-      @choice.move_confirmation_message(board, 'a')
-
-      expect(@test_ui.sorry_invalid_move).to be true
-    end
-  end
 end
