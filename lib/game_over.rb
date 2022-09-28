@@ -21,13 +21,4 @@ class GameOver
   def does_a_player_win(board)
     which_player_wins(board) != 'No winner'
   end
-
-  def game_over_message(board)
-    winner = which_player_wins(board)
-    if winner != 'No winner'
-      @output.game_over_win(winner)
-    else
-      @output.game_over_draw
-    end
-  end
 end

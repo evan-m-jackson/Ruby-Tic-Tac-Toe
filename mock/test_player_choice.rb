@@ -33,5 +33,4 @@ class TestPlayerChoice
     num = choice.to_i
     num - 1
   end
-
 end

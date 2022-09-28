@@ -50,5 +50,4 @@ describe 'PlayerChoice' do
       expect(@choice.is_space_free(board, choice)).to be false
     end
   end
-
 end

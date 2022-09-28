@@ -22,7 +22,7 @@ class Play
 
     run_game_until_win_or_draw
 
-    @game_over.game_over_message(@board.board)
+    game_over_message
   end
 
   private
@@ -65,6 +65,15 @@ class Play
       @cpu.cpu_pick(@board.board)
 
       @board.print_board
+    end
+  end
+
+  def game_over_message
+    if @game_over.does_a_player_win(@board.board)
+      winner = @game_over.which_player_wins(@board.board)
+      @output.game_over_win(winner)
+    else
+      @output.game_over_draw
     end
   end
 end

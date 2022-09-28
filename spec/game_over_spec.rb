@@ -77,24 +77,4 @@ describe 'GameOver' do
       expect(@game_over.does_a_player_win(@board)).to be false
     end
   end
-
-  describe '.game_over_message' do
-    it 'returns a message that says Player X has won' do
-      @board = %w[X X X O O 6 7 8 9]
-      @game_over.game_over_message(@board)
-      expect(@test_ui.game_over_win_called).to be true
-    end
-
-    it 'returns a message that says Player O has won' do
-      @board = %w[X X 3 O O O X 8 9]
-      @game_over.game_over_message(@board)
-      expect(@test_ui.game_over_win_called).to be true
-    end
-
-    it 'returns a message that says game is a draw' do
-      @board = %w[X O X X O X O X O]
-      @game_over.game_over_message(@board)
-      expect(@test_ui.game_over_draw_called).to be true
-    end
-  end
 end
