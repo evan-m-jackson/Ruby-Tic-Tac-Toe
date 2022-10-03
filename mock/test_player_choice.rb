@@ -1,5 +1,5 @@
-class PlayerChoice
-  def initialize(input: $stdin, output: output)
+class TestPlayerChoice
+  def initialize(input: arr, output: output)
     @HUMAN = 'X'
     @input = input
     @output = output
@@ -10,7 +10,9 @@ class PlayerChoice
   end
 
   def get_player_input
-    @input.gets.chomp.to_s
+    choice = @input[0]
+    @input.shift
+    choice
   end
 
   def is_user_input_valid(choice)
@@ -23,7 +25,8 @@ class PlayerChoice
   end
 
   def is_space_free(board, choice)
-    choice == board[get_choice_idx(choice)]
+    num = choice.to_i
+    choice == board[num - 1]
   end
 
   def get_choice_idx(choice)
