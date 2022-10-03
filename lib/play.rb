@@ -7,7 +7,7 @@ require './lib/command_ui'
 class Play
   attr_reader :board, :cpu, :player, :game_over
 
-  def initialize(board, cpu, player, game_over, output: output)
+  def initialize(board, cpu, player, game_over, output: ui)
     @board = board
     @cpu = cpu
     @player = player

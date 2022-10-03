@@ -2,14 +2,12 @@ require 'rspec'
 require './lib/board'
 require './lib/game_over'
 require './spec/player_choice_spec'
-require './mock/test_ui'
 
 describe 'GameOver' do
   before(:each) do
     @game = Board.new
     @board = @game.board
-    @test_ui = TestUI.new
-    @game_over = GameOver.new(output: @test_ui)
+    @game_over = GameOver.new
   end
 
   describe '.is_game_over' do

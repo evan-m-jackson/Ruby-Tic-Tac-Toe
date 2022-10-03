@@ -13,7 +13,7 @@ require './mock/test_board'
 describe 'Play' do
   before(:each) do
     @test_ui = TestUI.new
-    @end_of_game = GameOver.new(output: @test_ui)
+    @end_of_game = GameOver.new
     @ai_function = Minimax.new(@end_of_game)
     @board = Board.new
     @cpu = CPUChoice.new(@ai_function)

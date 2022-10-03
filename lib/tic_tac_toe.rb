@@ -8,7 +8,7 @@ require './lib/minimax'
 
 command_ui = CommandUI.new
 board = Board.new
-game_over = GameOver.new(output: command_ui)
+game_over = GameOver.new
 ai_function = Minimax.new(game_over)
 cpu = CPUChoice.new(ai_function)
 player = PlayerChoice.new(output: command_ui)
