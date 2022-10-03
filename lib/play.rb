@@ -7,26 +7,45 @@ require './lib/command_ui'
 class Play
   attr_reader :board, :cpu, :player, :game_over
 
-  def initialize(board, cpu, player, game_over)
+  def initialize(board, cpu, player, game_over, output: output)
     @board = board
     @cpu = cpu
     @player = player
     @game_over = game_over
+    @output = output
   end
 
+  def run
+    welcome_message
+
+    @board.print_board
+
+    run_game_until_win_or_draw
+
+    game_over_message
+  end
+
+  private
+
   def welcome_message
-    puts 'WELCOME TO TIC TAC TOE!'
+    @output.give_welcome_message
   end
 
   def player_picks_a_spot
     choice = @player.get_player_input
     is_choice_valid = @player.is_user_input_valid(choice)
-    is_choice_available = @player.is_space_free(@board.board, choice)
-    if is_choice_available && is_choice_valid
-      @board.mark_board(choice, 'X')
-      true
+    if is_choice_valid
+      choice_idx = @player.get_choice_idx(choice)
+      is_choice_available = @player.is_space_free(@board.board, choice)
+      if is_choice_available
+        @board.mark_board(choice_idx, 'X')
+        true
+      else
+        @output.sorry_taken
+        false
+      end
     else
-      @player.move_confirmation_message(@board.board, choice)
+      @output.sorry_invalid
       false
     end
   end
@@ -49,13 +68,12 @@ class Play
     end
   end
 
-  def run
-    welcome_message
-
-    @board.print_board
-
-    run_game_until_win_or_draw
-
-    @game_over.game_over_message(@board.board)
+  def game_over_message
+    if @game_over.does_a_player_win(@board.board)
+      winner = @game_over.which_player_wins(@board.board)
+      @output.game_over_win(winner)
+    else
+      @output.game_over_draw
+    end
   end
 end
