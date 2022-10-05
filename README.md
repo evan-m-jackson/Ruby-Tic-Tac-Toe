@@ -12,7 +12,7 @@ This game is single player and the player will go against a CPU. The player alwa
 
 ## For Developers
 
-I used Ruby version 2.6.10 in order to create this application.
+I used Ruby version 2.6.10 to create this application.
 
 In order to run all the tests for the application, type in the following command in the terminal:
 
