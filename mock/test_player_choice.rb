@@ -1,5 +1,5 @@
 class TestPlayerChoice
-  def initialize(output, input: arr)
+  def initialize(output:, input: arr)
     @HUMAN = 'X'
     @input = input
     @output = output

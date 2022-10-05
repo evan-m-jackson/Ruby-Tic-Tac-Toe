@@ -11,7 +11,7 @@ board = Board.new
 game_over = GameOver.new
 ai_function = Minimax.new(game_over)
 cpu = CPUChoice.new(ai_function)
-player = PlayerChoice.new(command_ui)
+player = PlayerChoice.new(output: command_ui)
 
 tic_tac_toe = Play.new(board, cpu, player, game_over, command_ui)
 

@@ -1,5 +1,5 @@
 class PlayerChoice
-  def initialize(output, input: $stdin)
+  def initialize(output:, input: $stdin)
     @HUMAN = 'X'
     @input = input
     @output = output
